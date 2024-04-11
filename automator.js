@@ -99,7 +99,7 @@ fac
         return frag("img")({
           alt: "logo",
           class: "home-image",
-          src: "./public/external/white-logo.png",
+          src: "https://cdn.jsdelivr.net/gh/elijahducote/Ev@main/public/external/white-logo.png",
           loading: "lazy",
           rel: "noreferrer",
           crossorigin: "",
@@ -109,7 +109,7 @@ fac
         return frag("img")({
           alt: "logo",
           class: "home-image1",
-          src: "./public/external/white-logo.png",
+          src: "https://cdn.jsdelivr.net/gh/elijahducote/Ev@main/public/external/external/white-logo.png",
           loading: "lazy",
           rel: "noreferrer",
           crossorigin: "",
