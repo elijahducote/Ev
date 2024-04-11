@@ -4,14 +4,6 @@
   "private": true,
   "type": "module",
   "main": "index.html",
-  "babel": {
-    "presets": [
-      "@parcel/babel-preset-env"
-    ],
-    "plugins": [
-      "@babel/plugin-proposal-nullish-coalescing-operator"
-    ]
-  },
   "dependencies": {
     "axios": "^1.6.8",
     "dayjs": "^1.11.10",
