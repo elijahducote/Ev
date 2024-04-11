@@ -195,7 +195,7 @@ function populate(max) {
         van.add(
           item,
           frag("img")({
-            src: "./new-icon.png",
+            src: "https://cdn.jsdelivr.net/gh/elijahducote/Ev@main/new-icon.png",
             style:
               "width:2rem !important;height:2rem !important;z-index:2;margin-left:.05rem;margin-right:1rem;position:relative;inset:0;position:absolute",
             rel: "noreferrer",
