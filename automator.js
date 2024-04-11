@@ -231,7 +231,7 @@ function populate(max) {
   );
 }
 van.add(sectionA, populate(4));
-van.add(sectionB, populate(9));
+van.add(sectionB, populate(7));
 van.add(
   sectionC,
   frag("iframe")({
