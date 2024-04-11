@@ -1,14 +1,4 @@
 {
-  "extends": ["@parcel/config-default"],
-  "transformers": {
-    "*.{js,mjs,jsm,jsx,es6,cjs,ts,tsx}": [
-      "@parcel/transformer-js",
-      {
-        "parser": "@babel/parser",
-        "parserOpts": {
-          "plugins": ["nullishCoalescingOperator"]
-        }
-      }
-    ]
-  }
+  "presets": ["@parcel/babel-preset-env"],
+  "plugins": ["@babel/plugin-proposal-nullish-coalescing-operator"]
 }
