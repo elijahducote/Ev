@@ -1142,12 +1142,13 @@
   min-height: 57vh;
   align-items: center;
   flex-direction: column;
-  background-size: 100% 100%
+  background-size: 100% 100%;
   /*background-size: cover;*/
   justify-content: center;
   background-color:#000;
   background-repeat:none;
-  background-position: 25% 60%;
+  background-position:center;
+  /*background-position: 25% 60%;*/
 }
 .home-container11 {
   width: 100%;
