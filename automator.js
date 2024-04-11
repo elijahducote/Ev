@@ -72,8 +72,8 @@ fac.getColorAsync(json[0].cover,{speed:"precision",algorithm:"dominant",step:3})
    // about = document.getElementsByClassName("home-text2")[0],
     root.style.setProperty("--basecolor","#FFF");
     root.style.setProperty("--linkcolor","#a1e0fb");
-    van.hydrate(wordmark,function() {return frag("img")({alt:"logo",class:"home-image",src:"./public/external/white-logo.png",loading:"lazy"})});
-    van.hydrate(brand,function() {return frag("img")({alt:"logo",class:"home-image1",src:"./public/external/white-logo.png",loading:"lazy"})});
+    van.hydrate(wordmark,function() {return frag("img")({alt:"logo",class:"home-image",src:"public/external/white-logo.png",loading:"lazy"})});
+    van.hydrate(brand,function() {return frag("img")({alt:"logo",class:"home-image1",src:"public/external/white-logo.png",loading:"lazy"})});
   }
   //about.style.color = `rgba(${combined[0]},${combined[1]},${combined[2]},1)`;
   tint = color.rgba.substring(0,color.rgb.length);
