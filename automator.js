@@ -154,7 +154,7 @@ function populate(max) {
     date[diff] = json[ocur].date;
     ++ocur;
   }
-  if (max) typo.push("EXPAND");
+  if (max && max >= typo.length) typo.push("EXPAND");
   const items = reactive(typo);
 
   return list(
