@@ -101,6 +101,8 @@ fac
           class: "home-image",
           src: "./public/external/white-logo.png",
           loading: "lazy",
+          rel: "noreferrer",
+          crossorigin: "",
         });
       });
       van.hydrate(brand, function () {
@@ -109,6 +111,8 @@ fac
           class: "home-image1",
           src: "./public/external/white-logo.png",
           loading: "lazy",
+          rel: "noreferrer",
+          crossorigin: "",
         });
       });
     }
@@ -194,6 +198,8 @@ function populate(max) {
             src: "./new-icon.png",
             style:
               "width:2rem !important;height:2rem !important;z-index:2;margin-left:.05rem;margin-right:1rem;position:relative;inset:0;position:absolute",
+            rel: "noreferrer",
+            crossorigin: "",
           }),
         );
       van.add(
@@ -202,6 +208,8 @@ function populate(max) {
           src: img[ndx],
           style:
             "width:2rem !important;height:2rem !important;z-index:1;margin-left:.05rem;margin-right:1rem",
+          rel: "noreferrer",
+          crossorigin: "",
         }),
       );
       van.add(
@@ -223,7 +231,7 @@ function populate(max) {
   );
 }
 van.add(sectionA, populate(5));
-van.add(sectionB, populate(4));
+van.add(sectionB, populate(9));
 van.add(
   sectionC,
   frag("iframe")({
