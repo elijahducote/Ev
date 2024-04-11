@@ -1143,7 +1143,7 @@
   height:auto;
   align-items: center;
   flex-direction: column;
-  background-size: 114vh contain;
+  background-size: 100vw 57vh, contain
   /*background-size: cover;*/
   justify-content: center;
   background-color:#000;
