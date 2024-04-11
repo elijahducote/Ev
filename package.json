@@ -1,0 +1,24 @@
+{
+  "name": "ev-music",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "parcel-bundler": "^1.6.1",
+    "axios": "^1.6.8",
+    "dotenv": "^16.4.5",
+    "vanjs-core": "^1.5.0",
+    "vanjs-ext": "^0.4.0",
+    "dayjs": "^1.11.10",
+    "fast-average-color": "^9.4.0"
+  },
+  "scripts": {
+    "tailwind": "tailwindcss -o style.css -c ./tailwind.config.js",
+    "dot": "node esbuild.config.js"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.0.24",
+    "autoprefixer": "^10.4.7",
+    "postcss": "^8.4.14"
+  }
+}

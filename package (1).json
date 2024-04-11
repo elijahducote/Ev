@@ -1,0 +1,29 @@
+{
+  "name": "evdmusic",
+  "version": "1.0.0",
+  "main": "automator.js",
+  "type": "module",
+  "engines": {
+    "npm": "10.2.4",
+    "node": "21.6.2"
+  },
+  "scripts": {
+    "dev": "node esbuild.config.js",
+    "test": "node esbuild.config.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "axios": "^1.6.8",
+    "dotenv": "^16.4.5",
+    "vanjs-core": "^1.5.0",
+    "vanjs-ext": "^0.4.0",
+    "dayjs": "^1.11.10",
+    "fast-average-color": "^9.4.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.20.2",
+    "live-server": "^1.2.2"
+  }
+}
