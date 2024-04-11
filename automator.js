@@ -137,6 +137,7 @@ function populate(max) {
     monthsApart,
     item;
   if (max <= cur) cur = max;
+  else max = null;
   for (nth = cur; cur; --cur) {
     diff = nth - cur;
     if (diff & 1 && len) {
