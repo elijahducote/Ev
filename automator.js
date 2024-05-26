@@ -5,6 +5,7 @@ import timezone from "dayjs/plugin/timezone";
 import { FastAverageColor } from "fast-average-color";
 import { reactive, list } from "vanjs-ext";
 import { discography as json, tracks as jsontwo } from "./automation.json";
+jsontwo.reverse();
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.tz.setDefault("America/Chicago");
