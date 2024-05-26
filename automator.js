@@ -8,7 +8,7 @@ import { discography as json, tracks as jsontwo } from "./automation.json";
 jsontwo.reverse();
 function getMostRecentItem (array1, array2) {
     // Combine both arrays
-    const combinedArray = [...array1, ...array2];
+    const combinedArray = [array1, array2];
 
     // Sort the combined array based on the "date" property
     combinedArray.sort((a, b) => {
