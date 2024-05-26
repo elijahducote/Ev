@@ -5,7 +5,6 @@ import timezone from "dayjs/plugin/timezone";
 import { FastAverageColor } from "fast-average-color";
 import { reactive, list } from "vanjs-ext";
 import { discography as json, tracks as jsontwo } from "./automation.json";
-jsontwo.reverse();
 function getMostRecentItem (array1, array2) {
     // Combine both arrays
     const combinedArray = [array1, array2];
@@ -32,9 +31,10 @@ store,
 urlpath,
 chosen = getMostRecentItem(json[0],jsontwo[0]);
 
-
 if (chosen.album) urlpath = "track";
 else urlpath = "album";
+
+jsontwo.reverse();
 
 function mixColors(color1, color2, percentage) {
   const ratio = percentage / 100;
