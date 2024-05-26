@@ -6,12 +6,32 @@ import { FastAverageColor } from "fast-average-color";
 import { reactive, list } from "vanjs-ext";
 import { discography as json, tracks as jsontwo } from "./automation.json";
 jsontwo.reverse();
+function getMostRecentItem (array1, array2) {
+    // Combine both arrays
+    const combinedArray = [...array1, ...array2];
+
+    // Sort the combined array based on the "date" property
+    combinedArray.sort((a, b) => {
+        const dateA = dayjs(a.date);
+        const dateB = dayjs(b.date);
+        return dateB.isAfter(dateA) ? 1 : -1;
+    });
+
+    // Return the first element, which is the most recent date
+    return combinedArray[0];
+};
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.tz.setDefault("America/Chicago");
 const fac = new FastAverageColor(),
   root = document.documentElement;
-var tint, unfoldSize, expandSize, store;
+var tint, unfoldSize, expandSize, store,
+chosen = getMostRecentItem(json[0],jsontwo[0]),
+urlpath;
+
+
+if (chosen.album) urlpath = "track";
+else urlpath = "album";
 
 function mixColors(color1, color2, percentage) {
   const ratio = percentage / 100;
@@ -59,7 +79,7 @@ van.add(
     { class: "home-btn-group" },
     frag("a")(
       {
-        href: json[0].url,
+        href: chosen.url,
         target: "_blank",
         rel: "noreferrer noopener",
         class: "home-link8 button",
@@ -73,7 +93,7 @@ van.add(
 );
 
 fac
-  .getColorAsync(json[0].cover, {
+  .getColorAsync(chosen.cover, {
     speed: "precision",
     algorithm: "dominant",
     step: 3,
@@ -119,7 +139,7 @@ fac
     }
     //about.style.color = `rgba(${combined[0]},${combined[1]},${combined[2]},1)`;
     tint = color.rgba.substring(0, color.rgb.length);
-    sectionD.style.backgroundImage = `linear-gradient(175deg, ${tint},0.48) 0%, ${tint},0.64) 100%),url("${json[0].cover}")`;
+    sectionD.style.backgroundImage = `linear-gradient(175deg, ${tint},0.48) 0%, ${tint},0.64) 100%),url("${chosen.cover}")`;
   });
 
 function populate(max) {
@@ -144,7 +164,7 @@ function populate(max) {
     if (diff & 1 && len) {
       typo[diff] = jsontwo[len - 1].name;
       link[diff] = jsontwo[len - 1].url;
-      img[diff] = jsontwo[len - 1].photo;
+      img[diff] = jsontwo[len - 1].cover;
       date[diff] = jsontwo[len - 1].date;
       --len;
       continue;
@@ -239,7 +259,7 @@ van.add(
   frag("iframe")({
     style: "width:100%",
     class: "home-iframe",
-    src: `https://open.spotify.com/embed/album/${json[0].id}?utm_source=oembed`,
+    src: `https://open.spotify.com/embed/${urlpath}/${chosen.id}?utm_source=oembed`,
     allowfullscreen: "",
     allow: "clipboard-write; encrypted-media; fullscreen; picture-in-picture;",
     frameborder: "no",
