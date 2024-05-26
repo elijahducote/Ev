@@ -18,7 +18,7 @@ NTH;
 
 exports.handler = async function (event, context) {
 try {
-await axios.get("https://api.github.com/repos/elijahducote/EV-Website/contents/automation.json",{headers:{"Accept":"application/vnd.github+json","Authorization":`Bearer ${process.env.TOKEN}`,"X-GitHub-Api-Version":"2022-11-28"}})
+await axios.get("https://api.github.com/repos/elijahducote/Ev/contents/automation.json",{headers:{"Accept":"application/vnd.github+json","Authorization":`Bearer ${process.env.TOKEN}`,"X-GitHub-Api-Version":"2022-11-28"}})
  .then(response => {
     if (response.status === 200) {
       json = JSON.parse(atob(response.data.content));
@@ -97,7 +97,7 @@ json.discography = payload;
 json.tracks = poplus;
 fyl = JSON.stringify(json);
 
-await axios.put("https://api.github.com/repos/elijahducote/Ev-Website/contents/automation.json",{"message":"update file","sha":sha,"content":Buffer.from(fyl).toString("base64")},{headers:{"Accept":"application/vnd.github+json","Authorization":`Bearer ${process.env.TOKEN}`,"X-GitHub-Api-Version":"2022-11-28"}}).then(response => {
+await axios.put("https://api.github.com/repos/elijahducote/Ev/contents/automation.json",{"message":"update file","sha":sha,"content":Buffer.from(fyl).toString("base64")},{headers:{"Accept":"application/vnd.github+json","Authorization":`Bearer ${process.env.TOKEN}`,"X-GitHub-Api-Version":"2022-11-28"}}).then(response => {
     if (response.status === 200) {
       msgcode = response.data.commit.sha;
     }
