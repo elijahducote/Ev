@@ -19,15 +19,18 @@ function getMostRecentItem (array1, array2) {
 
     // Return the first element, which is the most recent date
     return combinedArray[0];
-};
+}
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.tz.setDefault("America/Chicago");
 const fac = new FastAverageColor(),
   root = document.documentElement;
-var tint, unfoldSize, expandSize, store,
-chosen = getMostRecentItem(json[0],jsontwo[0]),
-urlpath;
+var tint,
+unfoldSize,
+expandSize,
+store,
+urlpath,
+chosen = getMostRecentItem(json[0],jsontwo[0]);
 
 
 if (chosen.album) urlpath = "track";
@@ -92,8 +95,7 @@ van.add(
   ),
 );
 
-fac
-  .getColorAsync(chosen.cover, {
+fac.getColorAsync(chosen.cover, {
     speed: "precision",
     algorithm: "dominant",
     step: 3,
