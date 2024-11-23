@@ -5,19 +5,19 @@ import timezone from "dayjs/plugin/timezone";
 import { FastAverageColor } from "fast-average-color";
 import { reactive, list } from "vanjs-ext";
 import { discography as json, tracks as jsontwo } from "./automation.json";
-function getMostRecentItem (array1, array2) {
-    // Combine both arrays
-    const combinedArray = [array1, array2];
+function getMostRecentItem(array1, array2) {
+  // Combine both arrays
+  const combinedArray = [array1, array2];
 
-    // Sort the combined array based on the "date" property
-    combinedArray.sort((a, b) => {
-        const dateA = dayjs(a.date);
-        const dateB = dayjs(b.date);
-        return dateB.isAfter(dateA) ? 1 : -1;
-    });
+  // Sort the combined array based on the "date" property
+  combinedArray.sort((a, b) => {
+    const dateA = dayjs(a.date);
+    const dateB = dayjs(b.date);
+    return dateB.isAfter(dateA) ? 1 : -1;
+  });
 
-    // Return the first element, which is the most recent date
-    return combinedArray[0];
+  // Return the first element, which is the most recent date
+  return combinedArray[0];
 }
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -25,11 +25,11 @@ dayjs.tz.setDefault("America/Chicago");
 const fac = new FastAverageColor(),
   root = document.documentElement;
 var tint,
-unfoldSize,
-expandSize,
-store,
-urlpath,
-chosen = getMostRecentItem(json[0],jsontwo[0]);
+  unfoldSize,
+  expandSize,
+  store,
+  urlpath,
+  chosen = getMostRecentItem(json[0], jsontwo[0]);
 
 if (chosen.album) urlpath = "track";
 else urlpath = "album";
@@ -95,7 +95,8 @@ van.add(
   ),
 );
 
-fac.getColorAsync(chosen.cover, {
+fac
+  .getColorAsync(chosen.cover, {
     speed: "precision",
     algorithm: "dominant",
     step: 3,
@@ -122,7 +123,7 @@ fac.getColorAsync(chosen.cover, {
         return frag("img")({
           alt: "logo",
           class: "home-image",
-          src: "https://cdn.jsdelivr.net/gh/elijahducote/Ev@main/public/external/white-logo.png",
+          src: "https://cdn.jsdelivr.net/gh/elijahducote/EV@main/public/external/white-logo.png",
           loading: "lazy",
           rel: "noreferrer",
           crossorigin: "",
@@ -132,7 +133,7 @@ fac.getColorAsync(chosen.cover, {
         return frag("img")({
           alt: "logo",
           class: "home-image1",
-          src: "https://cdn.jsdelivr.net/gh/elijahducote/Ev@main/public/external/white-logo.png",
+          src: "https://cdn.jsdelivr.net/gh/elijahducote/EV@main/public/external/white-logo.png",
           loading: "lazy",
           rel: "noreferrer",
           crossorigin: "",
