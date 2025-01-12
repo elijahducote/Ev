@@ -82,7 +82,7 @@ van.add(
     { class: "home-btn-group" },
     frag("a")(
       {
-        href: chosen.url,
+        href: json[0].url,
         target: "_blank",
         rel: "noreferrer noopener",
         class: "home-link8 button",
