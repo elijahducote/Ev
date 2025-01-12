@@ -262,7 +262,7 @@ van.add(
   frag("iframe")({
     style: "width:100%",
     class: "home-iframe",
-    src: `https://open.spotify.com/embed/${urlpath}/${json[0].id}?utm_source=oembed`,
+    src: `https://open.spotify.com/embed/${urlpath}/${json[0][0].id}?utm_source=oembed`,
     allowfullscreen: "",
     allow: "clipboard-write; encrypted-media; fullscreen; picture-in-picture;",
     frameborder: "no",
