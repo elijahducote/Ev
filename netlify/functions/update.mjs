@@ -57,7 +57,7 @@ catch (error) {
 }
 
 try {
-await axios.get("https://api.spotify.com/v1/artists/5hTbr7Q7inWI4pYOcOPsH0/top-tracks?country=US",{headers:{"Authorization": `Bearer ${token}`}})
+await axios.get("https://api.spotify.com/v1/artists/5hTbr7Q7inWI4pYOcOPsH0/top-tracks?limit=50&country=US",{headers:{"Authorization": `Bearer ${token}`}})
  .then(response => {
     if (response.status === 200) stats = response.data.tracks;
     else throw new Error("Uh, oh! " + response.status);
