@@ -9,7 +9,7 @@ import { discography as json, tracks as jsontwo } from "./automation.json";
 jsontwo.sort((a, b) => {
   const dateA = dayjs(a.date);
   const dateB = dayjs(b.date);
-  return dateB.isAfter(dateA) ? 1 : -1;
+  return dateB.isBefore(dateA) ? 1 : -1;
 });
 
 function getMostRecentItem(array1, array2) {
