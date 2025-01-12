@@ -152,7 +152,8 @@ function populate(max) {
     img = [],
     date = [],
     len = jsontwo.length,
-    cur = json.length + jsontwo.length,
+    //cur = json.length + jsontwo.length,
+    cur = jsontwo.length,
     ndx = -1,
     offset = json.length - jsontwo.length,
     ocur = 0,
@@ -164,6 +165,11 @@ function populate(max) {
   else max = null;
   for (nth = cur; cur; --cur) {
     diff = nth - cur;
+    typo[diff] = jsontwo[ocur].name;
+    link[diff] = jsontwo[ocur].url;
+    img[diff] = jsontwo[ocur].cover;
+    date[diff] = jsontwo[ocur].date;
+    /*diff = nth - cur;
     if (diff & 1 && len) {
       typo[diff] = jsontwo[len - 1].name;
       link[diff] = jsontwo[len - 1].url;
@@ -176,7 +182,7 @@ function populate(max) {
     typo[diff] = json[ocur].name;
     link[diff] = json[ocur].url;
     img[diff] = json[ocur].cover;
-    date[diff] = json[ocur].date;
+    date[diff] = json[ocur].date;*/
     ++ocur;
   }
   if (max) typo.push("EXPAND");
