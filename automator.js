@@ -13,7 +13,7 @@ function getMostRecentItem(array1, array2) {
   combinedArray.sort((a, b) => {
     const dateA = dayjs(a.date);
     const dateB = dayjs(b.date);
-    return dateB.isAfter(dateA) ? 1 : -1;
+    return dateA.isAfter(dateB) ? 1 : -1;
   });
 
   // Return the first element, which is the most recent date
