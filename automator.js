@@ -5,6 +5,13 @@ import timezone from "dayjs/plugin/timezone";
 import { FastAverageColor } from "fast-average-color";
 import { reactive, list } from "vanjs-ext";
 import { discography as json, tracks as jsontwo } from "./automation.json";
+
+jsontwo.sort((a, b) => {
+  const dateA = dayjs(a.date);
+  const dateB = dayjs(b.date);
+  return dateB.isAfter(dateA) ? 1 : -1;
+});
+
 function getMostRecentItem(array1, array2) {
   // Combine both arrays
   const combinedArray = [array1, array2];
