@@ -1,5 +1,5 @@
 [[redirects]]
-  from = "/*"
+  from = "/go/*"
   to = "https://evbeats.net/.netlify/functions/:splat"
   status = 200
 
