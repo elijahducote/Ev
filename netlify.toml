@@ -2,6 +2,90 @@
   from = "/*"
   to = "/.netlify/functions/:splat"
   status = 200
-  
+
+[[redirects]]
+  from = "/sunshine"
+  to = "https://open.spotify.com/album/1dt05UBROzpddBt6cTfouB?si=bdHyZvjlSlOLH9vbMb0bZg"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/paths"
+  to = "https://open.spotify.com/album/7wrzf5ft8ZPrwOwl2iRgbK?si=1HdWHsXZSTqEyQ6Hk5Jwyg"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/mark4"
+  to = "https://open.spotify.com/album/5gm7fyIUorbWvt5LjM1CIs?si=3nZvsmEHTjaQov4Ci9d3ZA"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/oceanaway"
+  to = "https://open.spotify.com/album/0pRH9a8OMttkHJHR7wIZZi?si=SJMDzQyqTiyocMLMtLHYgA"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/star"
+  to = "https://open.spotify.com/album/5D6xVujSaAhXqK8HHU4mxd?si=NDqsc6eRTG6UQYBS5x8YOA"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/trance"
+  to = "https://open.spotify.com/album/53XeDBxbVNCPjZAxZ5cpqR?si=L5xc4tu3TT6_v5g90rSSTQ"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/weirdstate"
+  to = "https://open.spotify.com/album/5Yoyl1coL9vfPVdEFP6yYq?si=Vbos_0N8TembdtF5ldjZog"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/loner"
+  to = "https://open.spotify.com/album/4JpNOkIddv92i0XayphmxD?si=j5eE9nsuRb-rfSjlVjlQRg"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/daystogrow"
+  to = "https://open.spotify.com/album/24fl4q4RygKRhWSnQPwIiQ?si=l9YtJ3SiTSOnEGtG6xsj3A"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/valentine"
+  to = "https://open.spotify.com/album/3QfPA79GjcmHGFIrZ4UvLm?si=dbt0pMXtR_ugjacOBVX7tg"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/year3"
+  to = "https://open.spotify.com/album/1qQkdJAq2tRKfbKUsDuA0d?si=KaE7g-PhThuF1xMAieTQlQ"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/windblows"
+  to = "https://open.spotify.com/album/1AtdYMb5F36xzbJG6Pz4SH?si=haJEKqdoT12-WZzRIxhiiA"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/316"
+  to = "https://soundcloud.com/yearthree/sets/mom-3-16-album"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/recover"
+  to = "https://open.spotify.com/album/1J8kRfdxNgeprJLF5sNYiU?si=qwR89XuTRJSoLbMfR_bX9w"
+  status = 301
+  force = true
+
 [functions]
   node_bundler = "esbuild"
