@@ -12,7 +12,8 @@
   },
   "scripts": {
     "tailwind": "tailwindcss -o style.css -c ./tailwind.config.js",
-    "dot": "node esbuild.config.js"
+    "dot": "node esbuild.config.js",
+    "build": "esbuild ./automator.js --keep-names --drop:debugger --pure:console.log --tree-shaking=true --legal-comments=none --charset=utf8 --format=iife --bundle --platform=browser --minify --target=chrome131,safari18.2,edge131,firefox133,opera115 --outdir=./js/"
   },
   "devDependencies": {
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.18.6",
