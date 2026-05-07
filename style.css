@@ -83,7 +83,10 @@
 }
 .vignette {
   width: 100%;
-  box-shadow: 0 -5rem 10rem rgba(0,0,0,0.6) inset;
+  box-shadow:
+    0 -6rem 14rem rgba(0, 0, 0, 0.88) inset,
+    0 6rem 14rem rgba(0, 0, 0, 0.7) inset,
+    0 0 6rem 1rem rgba(0, 0, 0, 0.45) inset;
   align-items: center;
   padding-top: var(--dl-space-space-twounits);
   padding-left: var(--dl-space-space-threeunits);

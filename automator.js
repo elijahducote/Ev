@@ -2,297 +2,412 @@ import van from "vanjs-core";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import relativeTime from "dayjs/plugin/relativeTime";
 import { FastAverageColor } from "fast-average-color";
-import { reactive, list } from "vanjs-ext";
-import { discography as json, tracks as jsontwo } from "./automation.json";
 
-jsontwo.sort((a, b) => {
-  const dateA = dayjs(a.date);
-  const dateB = dayjs(b.date);
-  return dateB.isBefore(dateA) ? 1 : -1;
-});
-
-function getMostRecentItem(array1, array2) {
-  // Combine both arrays
-  const combinedArray = [array1, array2];
-
-  // Sort the combined array based on the "date" property
-  combinedArray.sort((a, b) => {
-    const dateA = dayjs(a.date);
-    const dateB = dayjs(b.date);
-    return dateB.isAfter(dateA) ? 1 : -1;
-  });
-
-  // Return the first element, which is the most recent date
-  return combinedArray[0];
-}
 dayjs.extend(utc);
 dayjs.extend(timezone);
+dayjs.extend(relativeTime);
 dayjs.tz.setDefault("America/Chicago");
-const fac = new FastAverageColor(),
-  root = document.documentElement;
-var tint,
-  unfoldSize,
-  expandSize,
-  store,
-  urlpath,
-  chosen = getMostRecentItem(json[0], jsontwo[0]);
 
-if (chosen.album) urlpath = "track";
-else urlpath = "album";
+const PERIWINKLE_HEX = "92a2e8";
+const NEW_BADGE_MONTHS = 4;
+const WHITE_LOGO_SRC =
+  "https://cdn.jsdelivr.net/gh/elijahducote/EV@main/public/external/white-logo.png";
 
-jsontwo.reverse();
+const frag = (n) => van.tags[n];
 
-function mixColors(color1, color2, percentage) {
-  const ratio = percentage / 100;
-  const inverseRatio = 1 - ratio;
+const $hero = document.querySelector(".home-hero");
+const $heroSlot = document.querySelector(".home-container");
+const $navDropdown = document.querySelector(".navigation-links3-thq-dropdown");
+const $mobDropdown = document.querySelector(".home-thq-dropdown");
+const $header = document.querySelector(".home-header");
+const $mobMenu = document.querySelector(".home-mobile-menu");
+const $logo1 = document.querySelector(".home-image");
+const $logo2 = document.querySelector(".home-image1");
+const $grid = document.querySelector(".home-tracks");
+const $chips = document.querySelector(".home-tag-chips");
+const root = document.documentElement;
 
-  const mixedColor = color1.map((component, index) => {
-    return Math.round(component * inverseRatio + color2[index] * ratio);
-  });
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
+    if ($header) $header.style.display = "flex";
+  },
+  { once: true },
+);
 
-  return mixedColor;
+async function loadTracks() {
+  const res = await fetch("./automation.json", { cache: "no-cache" });
+  if (!res.ok) throw new Error(`automation.json ${res.status}`);
+  const { tracks = [] } = await res.json();
+  return tracks
+    .map(normalize)
+    .sort((a, b) => dayjs(b.time).valueOf() - dayjs(a.time).valueOf());
 }
 
-function throttle(func, delay) {
-  var prev = 0;
-  return function () {
-    if (Date.now() - prev > delay) {
-      prev = Date.now();
-      return func.apply(this, arguments);
-    }
+function normalize(t) {
+  return {
+    id: t.id,
+    title: t.name,
+    about: t.about || "",
+    artwork: t.cover,
+    url: t.url,
+    time: t.time,
+    embed: t.embed || buildEmbed(t.url),
+    tags: (t.tags || "")
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean),
   };
 }
 
-function frag(item) {
-  return van.tags[item];
+function buildEmbed(url) {
+  const params = new URLSearchParams({
+    url,
+    color: `#${PERIWINKLE_HEX}`,
+    auto_play: "false",
+    hide_related: "true",
+    show_comments: "false",
+    show_user: "true",
+    show_reposts: "false",
+    show_teaser: "false",
+    visual: "true",
+  });
+  return `https://w.soundcloud.com/player/?${params}`;
 }
 
-const sectionA = document.getElementsByClassName("home-thq-dropdown")[0],
-  sectionB = document.getElementsByClassName(
-    "navigation-links3-thq-dropdown",
-  )[0],
-  sectionC = document.getElementsByClassName("home-container")[0],
-  sectionD = document.getElementsByClassName("home-hero")[0],
-  sectionE = document.getElementsByClassName(
-    "navigation-links3-dropdown-toggle",
-  )[0],
-  sectionF = document.getElementsByClassName("home-mobile-menu")[0],
-  bg = document.getElementsByClassName("home-container")[0],
-  headr = document.getElementsByClassName("home-header")[0],
-  wordmark = document.getElementsByClassName("home-image")[0],
-  brand = document.getElementsByClassName("home-image1")[0];
+loadTracks().then(render).catch(renderError);
 
-van.add(
-  sectionD,
-  frag("div")(
-    { class: "home-btn-group" },
-    frag("a")(
-      {
-        href: json[0].url,
-        target: "_blank",
-        rel: "noreferrer noopener",
-        class: "home-link8 button",
-      },
-      frag("span")(
-        { class: "home-text5" },
-        frag("span")("Stream Now", frag("br")),
+function render(tracks) {
+  if (!tracks.length) return renderEmpty();
+  const top = tracks[0];
+
+  van.add(
+    $hero,
+    frag("div")(
+      { class: "home-btn-group" },
+      frag("a")(
+        {
+          href: top.url,
+          target: "_blank",
+          rel: "noreferrer noopener",
+          class: "home-link8 button",
+        },
+        frag("span")(
+          { class: "home-text5" },
+          frag("span")("Stream Now", frag("br")),
+        ),
       ),
     ),
-  ),
-);
+  );
 
-fac
-  .getColorAsync(chosen.cover, {
-    speed: "precision",
-    algorithm: "dominant",
-    step: 3,
-  })
-  .then(function (color) {
-    var combined = mixColors([255, 255, 255], color.value, 6.25),
-      bgcolor = mixColors([127, 127, 127], color.value, 62.5),
-      avrg = `rgba(${bgcolor[0]},${bgcolor[1]},${bgcolor[2]},1)`;
-    //van.add(optionB,releases);
-    //van.add(optionC,djev);
-    //van.add(optionD,merch);
-    //van.add(optionE,listen);
-    bg.style.backgroundColor = avrg;
-    headr.style.backgroundColor = avrg;
-    sectionF.style.backgroundColor = avrg;
-    if (color.isLight) {
-      root.style.setProperty("--basecolor", "#000");
-      root.style.setProperty("--linkcolor", "#0074F0");
-    } else {
-      // about = document.getElementsByClassName("home-text2")[0],
-      root.style.setProperty("--basecolor", "#FFF");
-      root.style.setProperty("--linkcolor", "#a1e0fb");
-      van.hydrate(wordmark, function () {
-        return frag("img")({
-          alt: "logo",
-          class: "home-image",
-          src: "https://cdn.jsdelivr.net/gh/elijahducote/EV@main/public/external/white-logo.png",
+  van.add($heroSlot, buildFeatured(top));
+
+  van.add($mobDropdown, populate(tracks, 4));
+  van.add($navDropdown, populate(tracks, 7));
+
+  if ($grid && $chips) renderGrid(tracks);
+
+  themeFromCover(top.artwork);
+}
+
+function buildFeatured(track) {
+  const showing = van.state(false);
+  return () =>
+    showing.val
+      ? frag("iframe")({
+          class: "home-iframe",
+          src: track.embed,
+          allow: "autoplay",
+          frameborder: "no",
+          scrolling: "no",
           loading: "lazy",
-          rel: "noreferrer",
-          crossorigin: "",
-        });
-      });
-      van.hydrate(brand, function () {
-        return frag("img")({
-          alt: "logo",
-          class: "home-image1",
-          src: "https://cdn.jsdelivr.net/gh/elijahducote/EV@main/public/external/white-logo.png",
-          loading: "lazy",
-          rel: "noreferrer",
-          crossorigin: "",
-        });
-      });
-    }
-    //about.style.color = `rgba(${combined[0]},${combined[1]},${combined[2]},1)`;
-    tint = color.rgba.substring(0, color.rgb.length);
-    sectionD.style.backgroundImage = `linear-gradient(175deg, ${tint},0.48) 0%, ${tint},0.64) 100%),url("${chosen.cover}")`;
+          title: track.title,
+        })
+      : frag("button")(
+          {
+            class: "home-iframe home-iframe-lite",
+            type: "button",
+            "aria-label": `Play ${track.title}`,
+            onclick: () => {
+              showing.val = true;
+            },
+          },
+          frag("img")({ src: track.artwork, alt: "", loading: "lazy" }),
+          frag("span")({ class: "home-iframe-play" }, "▶"),
+        );
+}
+
+function populate(tracks, max) {
+  const kairos = dayjs.tz();
+  const cap = Math.min(max, tracks.length);
+  const showExpand = cap < tracks.length;
+
+  const ul = frag("ul")({
+    class: "home-dropdown-list",
+    "data-thq": "thq-dropdown-list",
   });
 
-function populate(max) {
-  let kairos = dayjs.tz(),
-    typo = [],
-    link = [],
-    img = [],
-    date = [],
-    len = jsontwo.length,
-    //cur = json.length + jsontwo.length,
-    cur = jsontwo.length,
-    ndx = -1,
-    offset = json.length - jsontwo.length,
-    ocur = 0,
-    diff,
-    nth,
-    monthsApart,
-    item;
-  if (max <= cur) cur = max;
-  else max = null;
-  for (nth = cur; cur; --cur) {
-    diff = nth - cur;
-    typo[diff] = jsontwo[ocur].name;
-    link[diff] = jsontwo[ocur].url;
-    img[diff] = jsontwo[ocur].cover;
-    date[diff] = jsontwo[ocur].date;
-    /*diff = nth - cur;
-    if (diff & 1 && len) {
-      typo[diff] = jsontwo[len - 1].name;
-      link[diff] = jsontwo[len - 1].url;
-      img[diff] = jsontwo[len - 1].cover;
-      date[diff] = jsontwo[len - 1].date;
-      --len;
-      continue;
-    }
-
-    typo[diff] = json[ocur].name;
-    link[diff] = json[ocur].url;
-    img[diff] = json[ocur].cover;
-    date[diff] = json[ocur].date;*/
-    ++ocur;
-  }
-  if (max) typo.push("EXPAND");
-  const items = reactive(typo);
-
-  return list(
-    frag("ul")({
-      class: "home-dropdown-list",
-      "data-thq": "thq-dropdown-list",
-    }),
-    items,
-    function (v) {
-      ++ndx;
-      //if (ndx) numbr = ndx;
-      //affix = "0" + (ndx + 1);
-      //affix = affix.slice(-2);
-      item = frag("div")({
+  for (let i = 0; i < cap; i++) {
+    const t = tracks[i];
+    const isNew = kairos.diff(t.time, "month") < NEW_BADGE_MONTHS;
+    const toggle = frag("div")(
+      {
         class: "navigation-links3-dropdown-toggle01",
         "data-thq": "thq-dropdown-toggle",
-      });
-
-      if (ndx === max) {
-        van.add(item, frag("span")(typo[ndx]));
-        item.addEventListener("click", function () {
-          unfoldSize = max;
-          van.hydrate(item.parentNode.parentNode, function () {
-            return populate(unfoldSize + 2);
-          });
-        });
-        return frag("li")(
-          {
-            class: "navigation-links3-dropdown01 list-item",
-            "data-thq": "thq-dropdown",
-          },
-          item,
-        );
-      }
-
-      monthsApart = kairos.diff(date[ndx], "months");
-      if (monthsApart < 4)
-        van.add(
-          item,
-          frag("img")({
-            src: "https://cdn.jsdelivr.net/gh/elijahducote/Ev@main/new-icon.png",
-            style:
-              "width:2rem !important;height:2rem !important;z-index:2;margin-left:.05rem;margin-right:1rem;position:relative;inset:0;position:absolute",
-            rel: "noreferrer",
-            crossorigin: "",
-          }),
-        );
-      van.add(
-        item,
-        frag("img")({
-          src: img[ndx],
-          style:
-            "width:2rem !important;height:2rem !important;z-index:1;margin-left:.05rem;margin-right:1rem",
-          rel: "noreferrer",
-          crossorigin: "",
-        }),
-      );
-      van.add(
-        item,
-        frag("a")(
-          { href: link[ndx], target: "_blank", rel: "noreferrer noopener" },
-          typo[ndx],
-        ),
-      );
-      return frag("li")(
+      },
+      frag("img")({
+        src: t.artwork,
+        class: "home-dropdown-thumb",
+        alt: "",
+        rel: "noreferrer",
+        crossorigin: "",
+      }),
+      frag("a")(
+        { href: t.url, target: "_blank", rel: "noreferrer noopener" },
+        t.title,
+      ),
+      isNew ? frag("span")({ class: "home-dropdown-new" }, "NEW") : null,
+    );
+    van.add(
+      ul,
+      frag("li")(
         {
           style: "max-width:50vw",
           class: "navigation-links3-dropdown01 list-item",
           "data-thq": "thq-dropdown",
         },
-        item,
-      );
-    },
-  );
-}
-van.add(sectionA, populate(4));
-van.add(sectionB, populate(7));
-van.add(
-  sectionC,
-  frag("iframe")({
-    style: "width:100%",
-    class: "home-iframe",
-    src: `https://open.spotify.com/embed/album/${json[0].id}?utm_source=oembed`,
-    allowfullscreen: "",
-    allow: "clipboard-write; encrypted-media; fullscreen; picture-in-picture;",
-    frameborder: "no",
-    scrolling: "no",
-  }),
-);
-var elm = document.querySelector(".home-text1"),
-  val = window.getComputedStyle(elm, null);
-document.addEventListener(
-  "DOMContentLoaded",
-  function () {
-    headr.style.display = "flex";
-  },
-  { once: true },
-);
-///window.alert(parseInt(val.getPropertyValue("line-height"),10)*window.devicePixelRatio);
-//setInterval(function () {window.alert(JSON.stringify(elm.getBoundingClientRect()))}, 4000);
+        toggle,
+      ),
+    );
+  }
 
-//window.alert(*20)
-//van.hydrate(sectionA,populate())
+  if (showExpand) {
+    const expandToggle = frag("div")(
+      {
+        class: "navigation-links3-dropdown-toggle01",
+        "data-thq": "thq-dropdown-toggle",
+        onclick: () => {
+          ul.replaceWith(populate(tracks, max + 2));
+        },
+      },
+      frag("span")("EXPAND"),
+    );
+    van.add(
+      ul,
+      frag("li")(
+        {
+          class: "navigation-links3-dropdown01 list-item",
+          "data-thq": "thq-dropdown",
+        },
+        expandToggle,
+      ),
+    );
+  }
+
+  return ul;
+}
+
+function renderGrid(tracks) {
+  const allTags = [...new Set(tracks.flatMap((t) => t.tags))].sort();
+  const activeFilter = van.state("");
+  const activeCard = van.state(null);
+
+  const chipFor = (label, value) =>
+    frag("button")(
+      {
+        type: "button",
+        class: () =>
+          `home-tag-chip${activeFilter.val === value ? " is-active" : ""}`,
+        onclick: () => {
+          activeFilter.val = activeFilter.val === value ? "" : value;
+          activeCard.val = null;
+        },
+      },
+      label,
+    );
+
+  van.add($chips, chipFor("All", ""));
+  for (const tag of allTags) van.add($chips, chipFor(tag, tag));
+
+  van.add($grid, () => {
+    const filter = activeFilter.val;
+    const visible = filter
+      ? tracks.filter((t) => t.tags.includes(filter))
+      : tracks;
+    return frag("div")(
+      { class: "home-tracks-grid" },
+      visible.map((track) => buildCard(track, activeCard)),
+    );
+  });
+}
+
+function buildCard(track, activeCard) {
+  const months = dayjs.tz().diff(track.time, "month");
+  const cover = frag("div")(
+    { class: "home-track-cover" },
+    () =>
+      activeCard.val === track.id
+        ? frag("iframe")({
+            src: track.embed,
+            allow: "autoplay",
+            frameborder: "no",
+            scrolling: "no",
+            loading: "lazy",
+            title: track.title,
+          })
+        : frag("button")(
+            {
+              type: "button",
+              class: "home-track-cover-btn",
+              "aria-label": `Play ${track.title}`,
+              onclick: () => {
+                activeCard.val = track.id;
+              },
+            },
+            frag("img")({
+              src: track.artwork,
+              alt: track.title,
+              loading: "lazy",
+              crossorigin: "",
+            }),
+            frag("span")({ class: "home-track-play" }, "▶"),
+          ),
+    months < NEW_BADGE_MONTHS
+      ? frag("span")({ class: "home-track-new" }, "NEW")
+      : null,
+  );
+
+  const meta = frag("div")(
+    { class: "home-track-meta" },
+    frag("a")(
+      {
+        href: track.url,
+        target: "_blank",
+        rel: "noreferrer noopener",
+        class: "home-track-title",
+      },
+      track.title,
+    ),
+    frag("span")({ class: "home-track-date" }, dayjs(track.time).fromNow()),
+    track.about
+      ? frag("p")({ class: "home-track-about" }, track.about)
+      : null,
+    track.tags.length
+      ? frag("div")(
+          { class: "home-track-tags" },
+          track.tags.map((t) =>
+            frag("span")({ class: "home-track-tag" }, `#${t}`),
+          ),
+        )
+      : null,
+  );
+
+  return frag("article")({ class: "home-track-card" }, cover, meta);
+}
+
+function renderEmpty() {
+  if ($grid)
+    van.add(
+      $grid,
+      frag("p")(
+        { class: "home-tracks-empty" },
+        "Tracks will appear here as they're released.",
+      ),
+    );
+}
+
+function renderError(err) {
+  console.error("[automator]", err);
+  if ($grid)
+    van.add(
+      $grid,
+      frag("p")(
+        { class: "home-tracks-empty" },
+        "Unable to load releases right now.",
+      ),
+    );
+}
+
+function themeFromCover(coverUrl) {
+  const fac = new FastAverageColor();
+  fac
+    .getColorAsync(coverUrl, {
+      speed: "precision",
+      algorithm: "dominant",
+      step: 3,
+    })
+    .then((color) => {
+      const bg = mix([127, 127, 127], color.value, 62.5);
+      const tint = `rgba(${bg[0]},${bg[1]},${bg[2]},1)`;
+      $heroSlot.style.backgroundColor = tint;
+      $header.style.backgroundColor = tint;
+      $mobMenu.style.backgroundColor = tint;
+      applyTheme(bg);
+      const c = color.rgba.substring(0, color.rgb.length);
+      $hero.style.backgroundImage = `linear-gradient(175deg, ${c},0.375) 0%, ${c},0.5) 100%),url("${coverUrl}")`;
+    })
+    .catch((e) => console.warn("[automator] FAC failed", e));
+}
+
+function applyTheme(pageBg) {
+  const onLight = isLight(pageBg);
+  const base = onLight ? "#000" : "#FFF";
+  const invert = onLight ? "#FFF" : "#000";
+  const link = onLight ? "#0074F0" : "#a1e0fb";
+  const muted = onLight ? "rgba(0,0,0,0.74)" : "rgba(255,255,255,0.82)";
+  const surface = onLight ? "rgba(255,255,255,0.30)" : "rgba(0,0,0,0.22)";
+  const surfaceStrong = onLight
+    ? "rgba(255,255,255,0.55)"
+    : "rgba(0,0,0,0.42)";
+  const cardBorder = onLight
+    ? "rgba(0,0,0,0.22)"
+    : "rgba(255,255,255,0.20)";
+  const heroShadow = onLight
+    ? "0 0.15rem 0.4rem rgb(0,0,0), 0 0.3rem 0.85rem rgb(0,0,0)"
+    : "0 0.2rem 0.15rem rgb(0,0,0), 0 0.4rem 0.65rem rgba(0,0,0), 0 0.9rem 1.15rem rgb(0,0,0)";
+
+  root.style.setProperty("--basecolor", base);
+  root.style.setProperty("--invertcolor", invert);
+  root.style.setProperty("--linkcolor", link);
+  root.style.setProperty("--muted", muted);
+  root.style.setProperty("--surface", surface);
+  root.style.setProperty("--surface-strong", surfaceStrong);
+  root.style.setProperty("--card-border", cardBorder);
+  root.style.setProperty("--hero-text-shadow", heroShadow);
+
+  if (!onLight) {
+    for (const el of [$logo1, $logo2]) {
+      if (!el) continue;
+      van.hydrate(el, () =>
+        frag("img")({
+          alt: "logo",
+          class: el.className,
+          src: WHITE_LOGO_SRC,
+          loading: "lazy",
+          rel: "noreferrer",
+          crossorigin: "",
+        }),
+      );
+    }
+  }
+}
+
+function relativeLuminance([r, g, b]) {
+  const lin = [r, g, b].map((v) => {
+    const c = v / 255;
+    return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+  });
+  return 0.2126 * lin[0] + 0.7152 * lin[1] + 0.0722 * lin[2];
+}
+
+function isLight(rgb) {
+  return relativeLuminance(rgb) > 0.18;
+}
+
+function mix(a, b, percent) {
+  const r = percent / 100;
+  const ir = 1 - r;
+  return a.map((c, i) => Math.round(c * ir + b[i] * r));
+}
