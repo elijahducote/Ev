@@ -17,6 +17,7 @@
   display: inline-block;
   position: relative;
   border-radius: var(--dl-radius-radius-radius2);
+  margin-left: 0;
 }
 .navigation-links31-dropdown-toggle {
   fill: #595959;
@@ -40,8 +41,8 @@
   transition: 0.3s;
 }
 .navigation-links31-icon {
-  width: 2.25rem;
-  height: 2.25rem;
+  width: 1rem;
+  height: 1rem;
   margin-top: auto;
   transition: 0.3s;
   margin-bottom: auto;
@@ -364,6 +365,7 @@
   .navigation-links31-nav {
     align-items: flex-start;
     flex-direction: column;
+    gap: var(--dl-space-space-unit);
   }
   .navigation-links31-link {
     margin-left: 0;

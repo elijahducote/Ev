@@ -66,8 +66,8 @@
 }
 
 .navigation-links3-icon {
-  width: 2.25rem;
-  height: 2.25rem;
+  width: 1rem;
+  height: 1rem;
   margin-top: auto;
   transition: 0.3s;
   margin-bottom: auto;
@@ -585,6 +585,7 @@
   .navigation-links3-nav {
     align-items: flex-start;
     flex-direction: column;
+    gap: var(--dl-space-space-unit);
   }
 
   .navigation-links3-link {
