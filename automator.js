@@ -346,7 +346,7 @@ function themeFromCover(coverUrl) {
       $mobMenu.style.backgroundColor = tint;
       applyTheme(bg);
       const c = color.rgba.substring(0, color.rgb.length);
-      $hero.style.backgroundImage = `linear-gradient(175deg, ${c},0.55) 0%, ${c},0.7) 100%),url("${coverUrl}")`;
+      $hero.style.backgroundImage = `linear-gradient(175deg, ${c},0.42) 0%, ${c},0.55) 100%),url("${coverUrl}")`;
     })
     .catch((e) => console.warn("[automator] FAC failed", e));
 }
@@ -365,8 +365,8 @@ function applyTheme(pageBg) {
     ? "rgba(0,0,0,0.22)"
     : "rgba(255,255,255,0.20)";
   const heroShadow = onLight
-    ? "0 0.2rem 0.4rem rgb(0,0,0), 0 0.5rem 1.2rem rgb(0,0,0)"
-    : "0 0.2rem 0.25rem rgb(0,0,0), 0 0.6rem 1rem rgb(0,0,0), 0 1.2rem 2rem rgb(0,0,0)";
+    ? "0 0.2rem 0.3rem rgb(0,0,0), 0 0.5rem 1rem rgb(0,0,0), 0 1rem 2rem rgb(0,0,0), 0 2rem 4rem rgb(0,0,0)"
+    : "0 0.2rem 0.3rem rgb(0,0,0), 0 0.5rem 1rem rgb(0,0,0), 0 1rem 2rem rgb(0,0,0), 0 2rem 4rem rgb(0,0,0)";
 
   root.style.setProperty("--basecolor", base);
   root.style.setProperty("--invertcolor", invert);

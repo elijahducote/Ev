@@ -669,7 +669,10 @@
   height: 1.6rem;
   margin-right: 1rem;
   text-decoration: none;
-  filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.75));
+  stroke: #000;
+  stroke-width: 1.5px;
+  paint-order: stroke fill;
+  stroke-linejoin: round;
 }
 
 .home-row1 {
@@ -683,7 +686,10 @@
   height: 1.6rem;
   margin-right: 1rem;
   text-decoration: none;
-  filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.75));
+  stroke: #000;
+  stroke-width: 1.5px;
+  paint-order: stroke fill;
+  stroke-linejoin: round;
 }
 
 .home-row2 {
@@ -697,7 +703,10 @@
   height: 1.6rem;
   margin-right: 1rem;
   text-decoration: none;
-  filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.75));
+  stroke: #000;
+  stroke-width: 1.5px;
+  paint-order: stroke fill;
+  stroke-linejoin: round;
 }
 
 .home-burger-menu {
@@ -1246,7 +1255,10 @@
   height: 3.2rem;
   margin-right: 1rem;
   text-decoration: none;
-  filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.75));
+  stroke: #000;
+  stroke-width: 2px;
+  paint-order: stroke fill;
+  stroke-linejoin: round;
 }
 
 .home-container09 {
@@ -1259,7 +1271,10 @@
   height: 3.2rem;
   margin-right: 1rem;
   text-decoration: none;
-  filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.75));
+  stroke: #000;
+  stroke-width: 2px;
+  paint-order: stroke fill;
+  stroke-linejoin: round;
 }
 
 .home-icon20 {
@@ -1267,7 +1282,10 @@
   height: 3.2rem;
   margin-right: 1rem;
   text-decoration: none;
-  filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.75));
+  stroke: #000;
+  stroke-width: 2px;
+  paint-order: stroke fill;
+  stroke-linejoin: round;
 }
 
 .home-hero {
@@ -1323,7 +1341,7 @@
   font-size: 1.85rem;
   margin-top: var(--dl-space-space-twounits);
   font-weight: 600;
-  text-shadow: var(--hero-text-shadow, 0 .2rem .25rem rgba(0, 0, 0, 1), 0 .6rem 1rem rgba(0, 0, 0, 0.9), 0 1.2rem 2rem rgba(0, 0, 0, 0.8));
+  text-shadow: var(--hero-text-shadow, 0 .2rem .3rem #000, 0 .5rem 1rem #000, 0 1rem 2rem #000, 0 2rem 4rem #000);
   margin-bottom: var(--dl-space-space-twounits);
 }
 
@@ -1594,9 +1612,10 @@
   --surface: rgba(255, 255, 255, 0.10);
   --surface-strong: rgba(255, 255, 255, 0.18);
   --hero-text-shadow:
-    0 0.2rem 0.25rem rgb(0, 0, 0),
-    0 0.6rem 1rem rgb(0, 0, 0),
-    0 1.2rem 2rem rgb(0, 0, 0);
+    0 0.2rem 0.3rem rgb(0, 0, 0),
+    0 0.5rem 1rem rgb(0, 0, 0),
+    0 1rem 2rem rgb(0, 0, 0),
+    0 2rem 4rem rgb(0, 0, 0);
 }
 
 /* --- tracks section (release catalog) --- */
