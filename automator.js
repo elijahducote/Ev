@@ -18,7 +18,7 @@ const WHITE_LOGO_SRC =
 const frag = (n) => van.tags[n];
 
 const $hero = document.querySelector(".home-hero");
-const $heroSlot = document.querySelector(".home-container");
+const $heroSlot = document.querySelector(".home-container11");
 const $navDropdown = document.querySelector(".navigation-links3-thq-dropdown");
 const $mobDropdown = document.querySelector(".home-thq-dropdown");
 const $header = document.querySelector(".home-header");
@@ -41,9 +41,7 @@ async function loadTracks() {
   const res = await fetch("./automation.json", { cache: "no-cache" });
   if (!res.ok) throw new Error(`automation.json ${res.status}`);
   const { tracks = [] } = await res.json();
-  return tracks
-    .map(normalize)
-    .sort((a, b) => dayjs(b.time).valueOf() - dayjs(a.time).valueOf());
+  return tracks.map(normalize);
 }
 
 function normalize(t) {
