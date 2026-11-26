@@ -111,30 +111,16 @@ function render(tracks) {
 }
 
 function buildFeatured(track) {
-  const showing = van.state(false);
   return () =>
-    showing.val
-      ? frag("iframe")({
-          class: "home-iframe",
-          src: track.embed,
-          allow: "autoplay",
-          frameborder: "no",
-          scrolling: "no",
-          loading: "lazy",
-          title: track.title,
-        })
-      : frag("button")(
-          {
-            class: "home-iframe home-iframe-lite",
-            type: "button",
-            "aria-label": `Play ${track.title}`,
-            onclick: () => {
-              showing.val = true;
-            },
-          },
-          frag("img")({ src: track.artwork, alt: "", loading: "lazy" }),
-          frag("span")({ class: "home-iframe-play" }, "▶"),
-        );
+    frag("iframe")({
+      class: "home-iframe",
+      src: track.embed,
+      allow: "autoplay",
+      frameborder: "no",
+      scrolling: "no",
+      loading: "eager",
+      title: track.title,
+    });
 }
 
 function populate(tracks, max) {
